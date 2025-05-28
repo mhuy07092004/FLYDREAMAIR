@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles_home.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+  <body style="background: url('{{ url_for('static', filename='assets/Background1.png') }}') no-repeat center center; background-size: cover; min-height: 100vh; display: flex; flex-direction: column;">
+    <!-- <div class="header" style="background: url('{{ url_for('static', filename='assets/Background1.png') }}') no-repeat center center; background-size: cover;"> -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="{{ url_for('static', filename='assets/Logo.png') }}" alt="FlyDreamAir Logo" class="logo">
+            <span class="logo-text">FlyDreamAir</span>
+        </div>
+        <div class="nav-center">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Flights</a>
+            <a href="#" class="nav-link">Other Products</a>
+            <a href="#" class="nav-link">Membership</a>
+        </div>
+        <div class="nav-right">
+            <a href="/support" class="nav-link">Support</a>
+            <a href="/logout" class="nav-link">Log-out</a>
+            <a href="#" class="nav-link">English</a>
+        </div>
+    </nav>
+    <main class="main-container" style="flex: 1;">
+        <div class="card" style="width:75%; margin:50px auto; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1);">
+          <div class="card-header" style="background-color:#f8f9fa; border-bottom:1px solid #dee2e6; border-radius:10px 10px 0 0;">
+            <div class="nav">
+                <div class="active" onclick="show1()">BOOK FLIGHT</div>
+                <div onclick="show2()">MANAGE RESERVATION</div>
+                <div onclick="">CHECK-IN</div>
+            </div>
+          </div>
+          <div class="card-body" style="height:auto; min-height:300px; padding:20px;" id="body">
+            <!-- Content will be loaded by JavaScript -->
+          </div>
+        </div>
+      </main>
+      <div id="loader" class="loader"></div>
+    <script src="{{ url_for('static', filename='js/home.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+  </body>
+</html>

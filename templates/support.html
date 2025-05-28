@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlyDreamAir - Support</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='support.css') }}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <img src="{{ url_for('static', filename='assets/Logo.png') }}" alt="FlyDreamAir Logo" class="logo">
+            <span class="logo-text">FlyDreamAir</span>
+        </div>
+        <div class="nav-center">
+            <a href="/home" class="nav-link">Home</a>
+            <a href="/home" class="nav-link">Flights</a>
+            <a href="#" class="nav-link">Other Products</a>
+            <a href="#" class="nav-link">Membership</a>
+        </div>
+        <div class="nav-right">
+            <a href="/support" class="nav-link active">Support</a>
+            <a href="/" class="nav-link">Log-in</a>
+            <a href="/signup" class="nav-link">Sign-up</a>
+            <a href="#" class="nav-link">English</a>
+        </div>
+    </nav>
+
+    <main class="support-container">
+        <div class="support-header">
+            <h1>How can we help you?</h1>
+            <div class="search-box">
+                <input type="text" placeholder="Search for help...">
+                <button class="search-btn">
+                    <span class="material-icons">search</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="support-categories">
+            <div class="category-card">
+                <span class="material-icons">flight</span>
+                <h3>Flight Information</h3>
+                <p>Check flight status, schedules, and booking information</p>
+            </div>
+            <div class="category-card">
+                <span class="material-icons">confirmation_number</span>
+                <h3>Bookings & Reservations</h3>
+                <p>Manage your bookings, make changes, or cancel flights</p>
+            </div>
+            <div class="category-card">
+                <span class="material-icons">luggage</span>
+                <h3>Baggage</h3>
+                <p>Information about baggage allowance and lost luggage</p>
+            </div>
+            <div class="category-card">
+                <span class="material-icons">support_agent</span>
+                <h3>Contact Us</h3>
+                <p>Get in touch with our customer service team</p>
+            </div>
+        </div>
+
+        <div class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I change my flight?</h3>
+                        <span class="material-icons">expand_more</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can change your flight through our website or mobile app. Log in to your account, go to "My Bookings", select the flight you want to change, and follow the instructions.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>What is the baggage allowance?</h3>
+                        <span class="material-icons">expand_more</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Baggage allowance varies by ticket type and route. Economy class typically includes one checked bag up to 23kg and one carry-on bag up to 7kg. Please check your booking confirmation for specific details.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>How do I request a refund?</h3>
+                        <span class="material-icons">expand_more</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Refund requests can be made through our website or by contacting customer service. Please have your booking reference number ready. Refund eligibility depends on your ticket type and the time of cancellation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-section">
+            <h2>Need more help?</h2>
+            <div class="contact-options">
+                <div class="contact-card">
+                    <span class="material-icons">phone</span>
+                    <h3>Call Us</h3>
+                    <p>24/7 Customer Service</p>
+                    <p class="contact-detail">+1 (800) 123-4567</p>
+                </div>
+                <div class="contact-card">
+                    <span class="material-icons">email</span>
+                    <h3>Email Us</h3>
+                    <p>Response within 24 hours</p>
+                    <p class="contact-detail">support@flydreamair.com</p>
+                </div>
+                <div class="contact-card">
+                    <span class="material-icons">chat</span>
+                    <h3>Live Chat</h3>
+                    <p>Available 8am - 10pm</p>
+                    <button class="chat-btn">Start Chat</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Toggle FAQ answers
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('.material-icons');
+                
+                answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
+                icon.textContent = icon.textContent === 'expand_more' ? 'expand_less' : 'expand_more';
+            });
+        });
+    </script>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>FlyDreamAir</h3>
+                <p>Your trusted partner in air travel</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: support@flydreamair.com</p>
+                <p>Phone: +61 123 456 789</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#">Facebook</a>
+                    <a href="#">Twitter</a>
+                    <a href="#">Instagram</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 FlyDreamAir. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+

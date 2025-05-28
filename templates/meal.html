@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Meals and drinks</title>
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles_meal.css') }}">
+  <style>
+    .page-container {
+      display: flex;
+      gap: 40px;
+      padding: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .main-content {
+      flex: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      justify-items: center;
+    }
+    .card {
+      width: 100%;
+      max-width: 250px;
+    }
+    #cartShow {
+      width: 300px;
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: static;
+      height: fit-content;
+      display: flex;
+      flex-direction: column;
+    }
+    #cartShow h3 {
+      margin-top: 0;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #dee2e6;
+    }
+    #cartShow .cart-content {
+      flex: 1;
+      min-height: 200px;
+    }
+    #cartShow .cart-buttons {
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid #dee2e6;
+    }
+    #cartShow button {
+      margin: 5px 0;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+    }
+    #cartShow button:first-of-type {
+      background: #007bff;
+      color: white;
+    }
+    #cartShow button:last-of-type {
+      background: #dc3545;
+      color: white;
+    }
+    section {
+      margin-bottom: 40px;
+    }
+    section h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .subtitle {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-container">
+    <div class="main-content">
+      <header>
+        <a href="/manage_booking" class="back-link">&larr; Back</a>
+      </header>
+      <h1>Meals and drinks</h1>
+      <p class="subtitle">Choose your meal options</p>
+
+      <section>
+        <h2>Light meals</h2>
+        <div class="grid">
+          <div class="card">
+            <img src="{{ url_for('static', filename='assets/food1.png') }}" alt="toasted sandwiches">
+            <div class="card-title">Toasted Sandwiches</div>
+            <a href="#" class="info-link">More info&#9660;</a>
+            <div class="card-bottom">
+              <span class="price">$15.00</span>
+              <button class="add-btn" onclick="addToCart('Toasted Sandwiches', 15)">Add</button>
+            </div>
+          </div>
+          <div class="card">
+            <img src="{{ url_for('static', filename='assets/food2.png') }}" alt="toasted sandwiches">
+            <div class="card-title">Homestyle sandwich</div>
+            <a href="#" class="info-link">More info&#9660;</a>
+            <div class="card-bottom">
+              <span class="price">$15.00</span>
+              <button class="add-btn" onclick="addToCart('Homestyle sandwich', 15)">Add</button>
+            </div>
+          </div>
+          <div class="card">
+            <img src="{{ url_for('static', filename='assets/food3.png') }}" alt="toasted sandwiches">
+            <div class="card-title">Beef pho</div>
+            <a href="#" class="info-link">More info&#9660;</a>
+            <div class="card-bottom">
+              <span class="price">$15.00</span>
+              <button class="add-btn" onclick="addToCart('Beef pho', 15)">Add</button>
+            </div>
+          </div>
+          <div class="card">
+            <img src="{{ url_for('static', filename='assets/food4.png') }}" alt="toasted sandwiches">
+            <div class="card-title">Chicken wrap</div>
+            <a href="#" class="info-link">More info&#9660;</a>
+            <div class="card-bottom">
+              <span class="price">$15.00</span>
+              <button class="add-btn" onclick="addToCart('Chicken wrap', 15)">Add</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>Snacks</h2>
+        <div class="grid">
+          <div class="card">
+            <img src="{{ url_for('static', filename='assets/soft1.png') }}" alt="toasted sandwiches">
+            <div class="card-title">Original Pringles</div>
+            <a href="#" class="info-link">More info&#9660;</a>
+            <div class="card-bottom">
+              <span class="price">$10.00</span>
+              <button class="add-btn" onclick="addToCart('Original Pringles', 10)">Add</button>
+            </div>
+          </div>
+          <div class="card">
+            <img src="{{ url_for('static', filename='assets/soft2.png') }}" alt="toasted sandwiches">
+            <div class="card-title">Cob's Popcorn</div>
+            <a href="#" class="info-link">More info&#9660;</a>
+            <div class="card-bottom">
+              <span class="price">$10.00</span>
+              <button class="add-btn" onclick="addToCart('Cob\'s Popcorn', 10)">Add</button>
+            </div>
+          </div>
+          <div class="card">
+            <img src="{{ url_for('static', filename='assets/soft3.png') }}" alt="toasted sandwiches">
+            <div class="card-title">BBQ Vege Chips</div>
+            <a href="#" class="info-link">More info&#9660;</a>
+            <div class="card-bottom">
+              <span class="price">$10.00</span>
+              <button class="add-btn" onclick="addToCart('BBQ Vege Chips', 10)">Add</button>
+            </div>
+          </div>
+          <div class="card">
+            <img src="{{ url_for('static', filename='assets/soft4.png') }}" alt="toasted sandwiches">
+            <div class="card-title">Banana Bread</div>
+            <a href="#" class="info-link">More info&#9660;</a>
+            <div class="card-bottom">
+              <span class="price">$10.00</span>
+              <button class="add-btn" onclick="addToCart('Banana Bread', 10)">Add</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div id="cartShow">
+      <h3>Your Cart</h3>
+      <div class="cart-content">
+        <p>0 items selected</p>
+        <div>Total of items: $0</div>
+      </div>
+      <div class="cart-buttons">
+        <button onclick="saveCart()">Add to cart</button>
+        <button onclick="cancelOrder()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var totalPrice = 0;
+    var itemList = [];
+    var priceList = [];
+    
+    function addToCart(itemName, itemPrice){
+      console.log(itemName, itemPrice);
+      console.log(typeof(itemName), typeof(itemPrice));
+      var itemPrice = itemPrice;
+      var itemName = itemName;
+      totalPrice += itemPrice;
+      itemList.push(itemName);
+      priceList.push(itemPrice)
+      console.log(totalPrice, itemList, itemList.length);
+      document.querySelector('#cartShow .cart-content').innerHTML =  
+          '<p>'+ itemList.length  +' items selected</p>' + 
+          '<div>Total of items:' + '$' + totalPrice + '</div>'; 
+    }
+
+    function cancelOrder(){
+      totalPrice = 0;
+      itemList = [];
+      priceList = [];
+      document.querySelector('#cartShow .cart-content').innerHTML =  
+          '<p>'+ itemList.length  +' items selected</p>' + 
+          '<div>Total of items:' + '$' + totalPrice + '</div>'; 
+    }
+
+    async function saveCart(){
+      console.log(totalPrice);
+      if(totalPrice == 0){
+        alert('No item selected!');
+      }
+      else{
+        const response = await fetch('/api/saveCart', {
+          method:'POST',
+          headers:{
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({itemList, totalPrice, priceList})
+        });
+        answer = await response.json()
+        alert('Items added to cart successfully!');
+        window.location.href='/manage_booking';
+      }
+    }
+  </script>
+
+  <script src="{{ url_for('static', filename='js/meal.js') }}"></script>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>FlyDreamAir</h3>
+        <p>Your trusted partner in air travel</p>
+      </div>
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p>Email: support@flydreamair.com</p>
+        <p>Phone: +61 123 456 789</p>
+      </div>
+      <div class="footer-section">
+        <h3>Follow Us</h3>
+        <div class="social-links">
+          <a href="#">Facebook</a>
+          <a href="#">Twitter</a>
+          <a href="#">Instagram</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 FlyDreamAir. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Booking - FlyDreamAir</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles_manage_booking.css') }}">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    .select-button, .add-button {
+      display: inline-block;
+      padding: 6px 15px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      margin: 8px 0;
+      background-color: #007bff;
+      color: white;
+      border: 2px solid #007bff;
+      width: 90%;
+      text-align: center;
+      font-size: 0.9em;
+    }
+
+    .select-button:hover, .add-button:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+      transform: scale(1.05);
+    }
+
+    .select-button.disabled {
+      background-color: #cccccc;
+      border-color: #cccccc;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+    .update-options {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 15px;
+      padding: 20px;
+    }
+
+    .option {
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .option .icon {
+      margin-bottom: 10px;
+    }
+
+    .option .icon img {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+
+    .option-title {
+      font-size: 1em;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .option-status {
+      margin-top: 10px;
+      font-size: 0.9em;
+      color: #666;
+    }
+
+    .option-status.disabled {
+      color: #dc3545;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-left">
+      <img src="{{ url_for('static', filename='assets/Logo.png') }}" alt="FlyDreamAir Logo" class="logo">
+      <span class="logo-text">FlyDreamAir</span>
+    </div>
+    <div class="nav-center">
+      <a href="/home" class="nav-link">Home</a>
+      <a href="#" class="nav-link">Flights</a>
+      <a href="#" class="nav-link">Other Products</a>
+      <a href="#" class="nav-link">Membership</a>
+    </div>
+    <div class="nav-right">
+      <a href="/support" class="nav-link">Support</a>
+      <a href="/logout" class="nav-link">Log-out</a>
+      <a href="#" class="nav-link">English</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="booking-summary">
+      <div class="banner">
+        <div class="banner-text">
+          <div class="trip-title" id="trip-title">Melbourne Trip</div>
+          <div class="booking-number">Booking number: <span id="booking-number">ABCDEFG123</span></div>
+        </div>
+      </div>
+      <div class="flight-info">
+        <div class="route">
+          <div class="city">
+            <span class="code" id="from-code">SYD</span>
+            <span class="name" id="from-name">Sydney</span>
+          </div>
+          <div class="arrow">
+            <span class="date" id="departure-date">6 May 2025</span>
+            <span class="duration" id="duration">1h10m</span>
+            <span class="date" id="arrival-date">6 May 2025</span>
+          </div>
+          <div class="city">
+            <span class="code" id="to-code">MEL</span>
+            <span class="name" id="to-name">Melbourne</span>
+          </div>
+        </div>
+        <div class="times">
+          <span id="departure-time">10:40 am</span>
+          <span id="arrival-time">11:50 am</span>
+        </div>
+        <div class="passenger"> 
+          <span class="passenger-label">Passengers</span>
+          <span class="passenger-name" id="passenger-name">Mr John Smith (Adult)</span>
+        </div>
+      </div>
+    </section>
+
+    <aside class="manage-bookings">
+      <div class="manage-title">Manage bookings</div>
+      <a href="/payment" class="manage-link">Payment</a>
+      <a href="/history" class="manage-link">Booking history</a>
+      <a href="/passenger" class="manage-link">Passenger Details</a>
+      <a href="/support" class="manage-link">Help</a>
+    </aside>
+
+    <section class="update-flights">
+      <h2>UPDATE YOUR FLIGHTS</h2>
+      <div class="update-options">
+        <div class="option">
+          <div class="icon"><img src="{{ url_for('static', filename='assets/seat.png') }}" alt="Seat"></div>
+          <div class="option-title">Seat</div>
+          <a href="/seat" class="option-action select-button">Select Seat</a>
+          <div class="option-status not-selected" id="seat-status">NOT SELECTED</div>
+        </div>
+        <div class="option">
+          <div class="icon"><img src="{{ url_for('static', filename='assets/meal.png') }}" alt="Meal"></div>
+          <div class="option-title">Meals</div>
+          <a href="/meals" class="option-action add-button">Add Meal</a>
+          <div class="option-status not-added" id="meal-status">NOT ADDED</div>
+        </div>
+        <div class="option">
+          <div class="icon"><img src="{{ url_for('static', filename='assets/carry.png') }}" alt="Carry packages"></div>
+          <div class="option-title">Carry On</div>
+          <a href="/carry-baggage" class="option-action select-button">Add Baggage</a>
+          <div class="option-status" id="carry-baggage-status">7kg</div>
+        </div>
+        <div class="option">
+          <div class="icon"><img src="{{ url_for('static', filename='assets/checked.png') }}" alt="Checked packages"></div>
+          <div class="option-title">Checked baggage</div>
+          <a href="/checked-baggage" class="option-action select-button">Add Baggage</a>
+          <div class="option-status" id="checked-baggage-status">40kg</div>
+        </div>
+        <div class="option">
+          <div class="icon"><img src="{{ url_for('static', filename='assets/checkin.png') }}" alt="Check-in"></div>
+          <div class="option-title">Check-in</div>
+          <a href="#" class="option-action select-button disabled">Check-in</a>
+          <div class="option-status disabled">NOT AVAILABLE ONLINE</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="booking-data" 
+    data-trip-title="{{ trip_title }}"
+    data-booking-number="{{ booking_number }}"
+    data-from-code="{{ from_code }}"
+    data-from-name="{{ from_name }}"
+    data-to-code="{{ to_code }}"
+    data-to-name="{{ to_name }}"
+    data-departure-date="{{ departure_date }}"
+    data-arrival-date="{{ arrival_date }}"
+    data-flight-duration="{{ flight_duration }}"
+    data-departure-time="{{ departure_time }}"
+    data-arrival-time="{{ arrival_time }}"
+    data-fullname="{{ fullname }}"
+    data-seat-status="{{ seat_status }}"
+    data-food="{{ food }}"
+    data-carry-baggage="{{ carry_baggage }}"
+    data-checked-baggage="{{ checked_baggage }}"
+    style="display: none;">
+  </div>
+
+  <script src="{{ url_for('static', filename='js/manage_booking.js') }}"></script>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>FlyDreamAir</h3>
+        <p>Your trusted partner in air travel</p>
+      </div>
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p>Email: support@flydreamair.com</p>
+        <p>Phone: +61 123 456 789</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

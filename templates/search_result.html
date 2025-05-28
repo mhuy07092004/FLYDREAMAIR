@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flight Selection</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles_search_result.css') }}">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body id="body">
+  <nav class="navbar">
+    <div class="nav-left">
+      <img src="{{ url_for('static', filename='assets/Logo.png') }}" alt="FlyDreamAir Logo" class="logo">
+      <span class="logo-text">FlyDreamAir</span>
+    </div>
+    <div class="nav-center">
+      <a href="#" class="nav-link">Home</a>
+      <a href="#" class="nav-link">Flights</a>
+      <a href="#" class="nav-link">Other Products</a>
+      <a href="#" class="nav-link">Membership</a>
+    </div>
+    <div class="nav-right">
+      <a href="#" class="nav-link">Support</a>
+      <a href="/logout" class="nav-link">Log-out</a>
+      <a href="#" class="nav-link">English</a>
+    </div>
+  </nav>
+  <div id="departView" style="display: block;">
+    <!-- Your original departTrip HTML goes here -->
+      <div class="container">
+      <header>
+        <div class="route">
+          <span class="city" id="city11">SYD</span>
+          <span class="arrow">⇄</span>
+          <span class="city" id="city12">MEL</span>
+        </div>
+      </header>
+      <div class="selectors">
+        <button class="active" onclick="departTrip(event)">✈ Depart<br><span id="first_depart_date">6 May 2025</span></button>
+        <button onclick="returnTrip(event)">✈ Return<br><span id="second_depart_date">6 May 2025</span></button>
+        <button>👤 Passenger(s)<br><span>1</span></button>
+      </div>
+      <div class="flight-card">
+        <div class="flight-info">
+          <div class="time">
+            <span class="big" id="first_depart_time">10:40</span>
+            <span class="small" id="city13">SYD</span>
+          </div>
+          <div class="direct">
+            <span>Direct</span>
+            <span class="arrow">→</span>
+          </div>
+          <div class="time">
+            <span class="big" id="first_arrive_time">11:50</span>
+            <span class="small" id="city14">MEL</span>
+          </div>
+          <div class="details">
+            <div id="first_flight_number">✈ FD113</div>
+            <div id="duration1">⏱ Duration: 1 hour 10 minutes</div>
+            <a href="#">See details</a>
+          </div>
+        </div>
+        <div class="classes">
+          <div class="class economy selected" onclick="updatePrice1(this)">
+            <div>Economy</div>
+            <div class="from">from</div>
+            <div class="price" >305.11</div>
+            <div class="currency">AUD</div>
+          </div>
+          <div class="class premium" onclick="updatePrice1(this)">
+            <div>Premium</div>
+            <div class="from">from</div>
+            <div class="price">511.3</div>
+            <div class="currency">AUD</div>
+          </div>
+          <div class="class business" onclick="updatePrice1(this)">
+            <div>Business Class</div>
+            <div class="from">from</div>
+            <div class="price" >1103.05</div>
+            <div class="currency">AUD</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <a class="continue" href="/home" style="text-decoration: none;">Cancel</a>
+      <span class="footer-price" id ="totalPrice">0 <span class="footer-currency">AUD</span></span>
+      <a class="continue" style="text-decoration: none;" onclick="saveData()">Continue</a>
+    </div>
+  </div>
+
+  <div id="returnView" style="display: none;">
+    <!-- Your original returnTrip HTML goes here -->
+     <div class="container">
+    <header>
+      <div class="route">
+        <span class="city" id="city21">SYD</span>
+        <span class="arrow">⇄</span>
+        <span class="city" id="city22">MEL</span>
+      </div>
+    </header>
+    <div class="selectors">
+      <button onclick="departTrip(event)">✈ Depart<br><span id="first_depart_date2">6 May 2025</span></button>
+      <button class="active" onclick="returnTrip(event)">✈ Return<br><span id="second_depart_date2">6 May 2025</span></button>
+      <button>👤 Passenger(s)<br><span>1</span></button>
+    </div>
+    <div class="flight-card">
+      <div class="flight-info">
+        <div class="time">
+          <span class="big" id="second_depart_time">10:40</span>
+          <span class="small" id="city23">SYD</span>
+        </div>
+        <div class="direct">
+          <span>Direct</span>
+          <span class="arrow">→</span>
+        </div>
+        <div class="time">
+          <span class="big" id="second_arrive_time">11:50</span>
+          <span class="small" id="city24">MEL</span>
+        </div>
+        <div class="details">
+          <div id="second_flight_number">✈ FD113</div>
+          <div id="duration2">⏱ Duration: 1 hour 10 minutes</div>
+          <a href="#">See details</a>
+        </div>
+      </div>
+      <div class="classes">
+        <div class="class economy selected" onclick="updatePrice2(this)">
+          <div>Economy</div>
+          <div class="from">from</div>
+          <div class="price">305.11</div>
+          <div class="currency">AUD</div>
+        </div>
+        <div class="class premium" onclick="updatePrice2(this)">
+          <div>Premium</div>
+          <div class="from">from</div>
+          <div class="price">511.3</div>
+          <div class="currency">AUD</div>
+        </div>
+        <div class="class business" onclick="updatePrice2(this)">
+          <div>Business Class</div>
+          <div class="from">from</div>
+          <div class="price">1103.05</div>
+          <div class="currency">AUD</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <a class="continue" href="/home" style="text-decoration: none;">Cancel</a>
+    <span class="footer-price" id="totalPrice2">0 <span class="footer-currency">AUD</span></span>
+    <a class="continue" onclick="saveData()" style="text-decoration: none;">Continue</a>
+  </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/search_result.js') }}"></script>
+</body>
+</html>
