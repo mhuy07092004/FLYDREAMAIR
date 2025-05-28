@@ -28,16 +28,9 @@
       transform: scale(1.05);
     }
 
-    .select-button.disabled {
-      background-color: #cccccc;
-      border-color: #cccccc;
-      cursor: not-allowed;
-      pointer-events: none;
-    }
-
     .update-options {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 15px;
       padding: 20px;
     }
@@ -75,10 +68,6 @@
       margin-top: 10px;
       font-size: 0.9em;
       color: #666;
-    }
-
-    .option-status.disabled {
-      color: #dc3545;
     }
   </style>
 </head>
@@ -170,12 +159,6 @@
           <div class="option-title">Checked baggage</div>
           <a href="/checked-baggage" class="option-action select-button">Add Baggage</a>
           <div class="option-status" id="checked-baggage-status">40kg</div>
-        </div>
-        <div class="option">
-          <div class="icon"><img src="{{ url_for('static', filename='assets/checkin.png') }}" alt="Check-in"></div>
-          <div class="option-title">Check-in</div>
-          <a href="#" class="option-action select-button disabled">Check-in</a>
-          <div class="option-status disabled">NOT AVAILABLE ONLINE</div>
         </div>
       </div>
     </section>

@@ -5,22 +5,103 @@
   <title>Flight Selection</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="{{ url_for('static', filename='styles_search_result.css') }}">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 4rem;
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .nav-left .logo {
+      height: 45px;
+      width: auto;
+    }
+
+    .logo-text {
+      font-family: 'Handlee', cursive;
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: #1a73e8;
+      text-decoration: none;
+    }
+
+    .nav-center {
+      display: flex;
+      gap: 3rem;
+      align-items: center;
+      margin-left: auto;
+      margin-right: 2rem;
+    }
+
+    .nav-right {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      border-left: 1px solid #e0e0e0;
+      padding-left: 2rem;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: #1a73e8;
+    }
+
+    .nav-link.active {
+      color: #1a73e8;
+      font-weight: 600;
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #1a73e8;
+    }
+
+    body {
+      padding-top: 80px;
+    }
+  </style>
 </head>
-<body id="body">
+<body onload="showInfo()" id="body">
   <nav class="navbar">
     <div class="nav-left">
       <img src="{{ url_for('static', filename='assets/Logo.png') }}" alt="FlyDreamAir Logo" class="logo">
       <span class="logo-text">FlyDreamAir</span>
     </div>
     <div class="nav-center">
-      <a href="#" class="nav-link">Home</a>
+      <a href="/home" class="nav-link">Home</a>
       <a href="#" class="nav-link">Flights</a>
       <a href="#" class="nav-link">Other Products</a>
       <a href="#" class="nav-link">Membership</a>
     </div>
     <div class="nav-right">
-      <a href="#" class="nav-link">Support</a>
+      <a href="/support" class="nav-link">Support</a>
       <a href="/logout" class="nav-link">Log-out</a>
       <a href="#" class="nav-link">English</a>
     </div>
@@ -37,7 +118,7 @@
       </header>
       <div class="selectors">
         <button class="active" onclick="departTrip(event)">✈ Depart<br><span id="first_depart_date">6 May 2025</span></button>
-        <button onclick="returnTrip(event)">✈ Return<br><span id="second_depart_date">6 May 2025</span></button>
+        <button onclick="returnTrip(event)">✈ Return<br><span id="second_depart_date">6 June 2025</span></button>
         <button>👤 Passenger(s)<br><span>1</span></button>
       </div>
       <div class="flight-card">
@@ -101,7 +182,7 @@
     </header>
     <div class="selectors">
       <button onclick="departTrip(event)">✈ Depart<br><span id="first_depart_date2">6 May 2025</span></button>
-      <button class="active" onclick="returnTrip(event)">✈ Return<br><span id="second_depart_date2">6 May 2025</span></button>
+      <button class="active" onclick="returnTrip(event)">✈ Return<br><span id="second_depart_date2">6 June 2025</span></button>
       <button>👤 Passenger(s)<br><span>1</span></button>
     </div>
     <div class="flight-card">
@@ -152,7 +233,159 @@
     <a class="continue" onclick="saveData()" style="text-decoration: none;">Continue</a>
   </div>
   </div>
+</body>
 
-  <script src="{{ url_for('static', filename='js/search_result.js') }}"></script>
+  <script>
+    var price1 = 0;
+    var price2 = 0;
+    var total_price = 0;
+    var cnt = 0;
+
+    var flightInfo;
+    var firstFlightInfo;
+    var secondFlightInfo;
+    async function showInfo(){
+            
+            const response = await fetch('/api/flight');
+            const data = await response.json();
+            console.log(data);
+            var display = '';
+            var totalPrice = 0;
+
+            // Assigning flight data
+            firstFlight = data.first_flight;
+            secondFlight = data.second_flight;
+
+            // Basic extracted info
+            const first_depart_date = firstFlight.departDate.split(" ")[0];
+            const first_depart_time = firstFlight.departDate.split(" ")[1];
+            const second_depart_date = secondFlight.departDate.split(" ")[0];
+            const second_depart_time = secondFlight.departDate.split(" ")[1];
+            console.log(second_depart_date, second_depart_time)
+            const first_arrive_time = firstFlight.returnDate.split(" ")[1];
+            const second_arrive_time = secondFlight.returnDate.split(" ")[1];
+
+            // Optional: aggregate all important info into objects
+            firstFlightInfo = {
+                flight_class: 'DNF', 
+                airline: firstFlight.airline,
+                departDate: first_depart_date.toString(),
+                departTime: first_depart_time.toString(),
+                departPlace: firstFlight.departPlace,
+                duration: firstFlight.duration,
+                flight_number: firstFlight.flight_number,
+                arriveDate: first_depart_date.toString(),
+                arriveTime: first_arrive_time.toString(),
+                arrivePlace: firstFlight.returnPlace,
+                price: price1,
+            };
+
+            secondFlightInfo = {
+                flight_class: 'DNF', 
+                airline: secondFlight.airline,
+                departDate: second_depart_date.toString(),
+                departTime: second_depart_time.toString(),
+                departPlace: secondFlight.departPlace,
+                duration: secondFlight.duration,
+                flight_number: secondFlight.flight_number,
+                arriveDate: second_depart_date.toString(),
+                arriveTime: second_arrive_time.toString(),
+                arrivePlace: secondFlight.returnPlace,
+                price: price2,
+            };
+
+            
+            document.getElementById('city11').textContent = data.first_flight.departPlace;
+            document.getElementById('city12').textContent = data.first_flight.returnPlace;
+            document.getElementById('city13').textContent = data.first_flight.departPlace;
+            document.getElementById('city14').textContent = data.first_flight.returnPlace;
+
+            document.getElementById('city21').textContent = data.second_flight.departPlace;
+            document.getElementById('city22').textContent = data.second_flight.returnPlace;
+            document.getElementById('city23').textContent = data.second_flight.departPlace;
+            document.getElementById('city24').textContent = data.second_flight.returnPlace;
+
+            document.getElementById('duration1').textContent = "⏱ Durations: "  + data.first_flight.duration + " minutes";
+            document.getElementById('duration2').textContent = "⏱ Durations: "  + data.second_flight.duration + " minutes";
+
+            document.getElementById('first_depart_date').textContent = first_depart_date;
+            document.getElementById('second_depart_date').textContent = second_depart_date;
+
+            document.getElementById('first_depart_date2').textContent = first_depart_date;
+            document.getElementById('second_depart_date2').textContent = second_depart_date;
+
+            document.getElementById('first_depart_time').textContent = first_depart_time;
+            document.getElementById('first_arrive_time').textContent = first_arrive_time;
+            document.getElementById('second_depart_time').textContent = second_depart_time;
+            console.log()
+            document.getElementById('second_arrive_time').textContent = second_arrive_time;
+            document.getElementById('first_flight_number').textContent = data.first_flight.flight_number;
+            document.getElementById('second_flight_number').textContent = data.second_flight.flight_number;
+            // document.getElementById('').textContent = data;
+            
+    }
+    function departTrip(event) {
+      // event.preventDefault();
+      document.getElementById("departView").style.display = "block";
+      document.getElementById("returnView").style.display = "none";
+      document.getElementById("totalPrice").firstChild.nodeValue = total_price + " ";
+      console.log(price1, price2, total_price);
+    }
+
+    function returnTrip(event) {
+      // event.preventDefault();
+      document.getElementById("departView").style.display = "none";
+      document.getElementById("returnView").style.display = "block";
+      console.log(price1, price2, total_price);
+      document.getElementById("totalPrice2").firstChild.nodeValue = total_price + " ";
+    }
+
+
+    function updatePrice1(element){
+      var test = element.innerText;
+      var flight_class = test.split("\n")[0];
+      var flight_price = parseInt(test.split("\n")[2]);
+      console.log(typeof(flight_price));
+      if (price1 == flight_price) price1 = 0;
+      else price1 = flight_price;
+      console.log(price1);
+      total_price = price1 + price2;
+      console.log(total_price);
+      firstFlightInfo.price = price1;
+      firstFlightInfo.flight_class= flight_class;
+      console.log(flight_class);
+      document.getElementById("totalPrice").firstChild.nodeValue = total_price + " ";
+    }
+
+    function updatePrice2(element){
+      var test = element.innerText;
+      var flight_class = test.split("\n")[0];
+      var flight_price = parseInt(test.split("\n")[2]);
+      console.log(typeof(flight_price));
+      if (price2 == flight_price) price2 = 0;
+      else price2 = flight_price;
+      console.log(price2);
+      total_price = price1 + price2;
+      console.log(total_price);
+      secondFlightInfo.price = price2;
+      secondFlightInfo.flight_class = flight_class;
+      document.getElementById("totalPrice2").firstChild.nodeValue = total_price + " ";
+    }
+
+
+    async function saveData(){
+      flightInfo = {firstFlight: firstFlightInfo, secondFlight: secondFlightInfo, totalPrice: total_price};
+      console.log(flightInfo);
+      const response = await fetch('/api/flight_order', {
+                method:'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({flightInfo})
+            })
+            const answer = await response.json()
+      window.location.href = '/passenger'
+    }
+  </script>
 </body>
 </html>
